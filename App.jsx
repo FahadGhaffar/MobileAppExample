@@ -44,6 +44,7 @@ import Profile from './src/screen/Profile'
 import Signup from './src/screen/Signup'
 import Cart from './src/screen/Cart'
 import Home from './src/screen/Home' 
+import ChatScreen from './src/screen/ChatScreen.jsx' 
 // import homeicon from './scr/assest/icon/homeicon.png'
 
 import {  icons } from './src/constants/index.js'
@@ -154,7 +155,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
        {/* Floating Button */}
        <TouchableOpacity
         style={styles.floatingButton}
-        onPress={() => navigation.navigate('cart1')}
+        onPress={() => navigation.navigate('chatScreen')}
       >
         <Icon name="headphones" source={icons.call} size={24} color={Colors.blue30} />
       </TouchableOpacity>
@@ -332,7 +333,7 @@ function App() {
       <Stack.Navigator screenOptions={{
 
         headerShown: false,
-      }} initialRouteName='login'>
+      }} initialRouteName='chatScreen'>
         <Stack.Screen options={({ route }) => ({
 
           headerShown: false
@@ -352,7 +353,7 @@ function App() {
          <Stack.Screen options={({ route }) => ({
 
 headerShown: false
-})} name="cart1" component={Cart} />
+})} name="chatScreen" component={ChatScreen} />
       
       </Stack.Navigator>
 
