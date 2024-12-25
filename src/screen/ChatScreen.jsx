@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,10 @@ import {
   UIManager,
   Platform,
 } from 'react-native';
-import { FlashList } from '@shopify/flash-list';
+import {FlashList} from '@shopify/flash-list';
 import firestore from '@react-native-firebase/firestore';
 
 // Get user document with an ID of ABC
-
 
 if (
   Platform.OS === 'android' &&
@@ -23,21 +22,31 @@ if (
 }
 
 const ChatScreen = () => {
+  const getUser = async () => {
+    // const userDocument = await firestore()
+    //   .collection('Users')
+    //   .doc('GMhE4rb5SulfOweVIdyh')
+    //   .get();
+    const userDocument = await firestore().collection('Users').get();
+    userDocument.forEach(doc => console.log(doc.id, doc.data()));
+  };
+
+  getUser();
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
-//   const userDocument = firestore().collection('Users').doc('ABC');
+  // const userDocument = await firestore().collection('Users').doc('GMhE4rb5SulfOweVIdyh');
   const addMessage = () => {
     if (inputText.trim()) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setMessages((prevMessages) => [
-        { id: Date.now().toString(), text: inputText.trim() },
+      setMessages(prevMessages => [
+        {id: Date.now().toString(), text: inputText.trim()},
         ...prevMessages,
       ]);
       setInputText('');
     }
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <View style={styles.messageBubble}>
       <Text style={styles.messageText}>{item.text}</Text>
     </View>
@@ -48,7 +57,7 @@ const ChatScreen = () => {
       <FlashList
         data={messages}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         estimatedItemSize={50}
         inverted
       />

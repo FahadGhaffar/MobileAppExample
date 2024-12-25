@@ -183,7 +183,7 @@ function App() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="todo">
+        initialRouteName="chatScreen">
         <Stack.Screen
           options={({route}) => ({
             headerShown: false,
