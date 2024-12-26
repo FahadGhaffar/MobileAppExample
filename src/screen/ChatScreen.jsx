@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,9 +9,15 @@ import {
   UIManager,
   Platform,
 } from 'react-native';
+import {Icon, Assets} from 'react-native-ui-lib';
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from 'react-native-responsive-dimensions';
 import {FlashList} from '@shopify/flash-list';
 import firestore from '@react-native-firebase/firestore';
-
+import {icons, images} from '../constants';
 // Get user document with an ID of ABC
 
 if (
@@ -22,33 +28,93 @@ if (
 }
 
 const ChatScreen = () => {
+  const [messages, setMessages] = useState([]);
+  const [inputText, setInputText] = useState('');
+
+  useEffect(() => {
+    getUser();
+  }, []);
   const getUser = async () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    let tempData = [];
     // const userDocument = await firestore()
     //   .collection('Users')
     //   .doc('GMhE4rb5SulfOweVIdyh')
     //   .get();
     const userDocument = await firestore().collection('Users').get();
-    userDocument.forEach(doc => console.log(doc.id, doc.data()));
+
+    // userDocument.forEach(doc => console.log(doc.id, doc.data()));
+    userDocument.forEach(doc => {
+      doc.data()['ids'] = doc.id;
+      tempData.push(doc.data());
+    });
+    // firestore()
+    //   .collection('Users')
+    //   .add({
+    //     id: '1234',
+    //     name: inputText,
+    //   })
+    //   .then(() => {
+    //     console.log('user added');
+    //   });
+    console.log(tempData);
+
+    setMessages(tempData);
   };
 
-  getUser();
-  const [messages, setMessages] = useState([]);
-  const [inputText, setInputText] = useState('');
+  const deleteMessage = id => {
+    firestore()
+      .collection('Users')
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log('Doc deleted');
+      })
+      .catch(error => {
+        console.error('Error removing document: ', error);
+      });
+  };
   // const userDocument = await firestore().collection('Users').doc('GMhE4rb5SulfOweVIdyh');
   const addMessage = () => {
     if (inputText.trim()) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setMessages(prevMessages => [
-        {id: Date.now().toString(), text: inputText.trim()},
-        ...prevMessages,
-      ]);
+      // setMessages(prevMessages => [
+      //   {id: Date.now().toString(), text: inputText.trim()},
+      //   ...prevMessages,
+      // ]);
+
+      firestore()
+        .collection('Users')
+        .add({
+          id: Date.now().toString(),
+          name: inputText.trim(),
+        })
+        .then(() => {
+          console.log('user added');
+        });
       setInputText('');
+      // console.log(messages);
     }
   };
 
   const renderItem = ({item}) => (
     <View style={styles.messageBubble}>
-      <Text style={styles.messageText}>{item.text}</Text>
+      <Text style={styles.messageText}>{item.name}</Text>
+      <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+        <Icon
+          source={icons.editIcon}
+          tintColor={'#ffffff'}
+          size={20}
+          style={{marginRight: 10}}
+        />
+        <TouchableOpacity
+          style={{}}
+          onPress={() => {
+            deleteMessage(item.ids);
+          }}>
+          <Icon source={icons.deleteIcon} tintColor={'#ffffff'} size={20} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -57,7 +123,7 @@ const ChatScreen = () => {
       <FlashList
         data={messages}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.ids}
         estimatedItemSize={50}
         inverted
       />
@@ -83,11 +149,14 @@ const styles = StyleSheet.create({
   },
   messageBubble: {
     backgroundColor: '#007bff',
-    padding: 10,
+    padding: 20,
     marginVertical: 5,
     marginHorizontal: 10,
     borderRadius: 8,
-    alignSelf: 'flex-start',
+    width: responsiveWidth(95),
+    // alignSelf: 'flex-start',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   messageText: {
     color: '#fff',
