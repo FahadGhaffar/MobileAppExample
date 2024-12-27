@@ -8,8 +8,10 @@ import {
   LayoutAnimation,
   UIManager,
   Platform,
+  Button,
 } from 'react-native';
 import {Icon, Assets} from 'react-native-ui-lib';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import {
   responsiveHeight,
   responsiveWidth,
@@ -17,6 +19,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import {FlashList} from '@shopify/flash-list';
 import firestore from '@react-native-firebase/firestore';
+import Modal from 'react-native-modal';
 import {icons, images} from '../constants';
 // Get user document with an ID of ABC
 
@@ -28,15 +31,20 @@ if (
 }
 
 const ChatScreen = () => {
+  let tempData = [];
   const [messages, setMessages] = useState([]);
+  const [isedit, Setedit] = useState(true);
+  const [isSetEditId, setEidtId] = useState('');
   const [inputText, setInputText] = useState('');
-
+  const [inputEditText, setEditInputText] = useState('');
+  const [isModalVisible, setModalVisible] = useState(false);
+ 
   useEffect(() => {
     getUser();
   }, []);
   const getUser = async () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    let tempData = [];
+
     // const userDocument = await firestore()
     //   .collection('Users')
     //   .doc('GMhE4rb5SulfOweVIdyh')
@@ -74,14 +82,34 @@ const ChatScreen = () => {
         console.error('Error removing document: ', error);
       });
   };
+
+  const editMessage = async (docId, text) => {
+    try {
+      
+      await firestore().collection('Users').doc(docId).update({
+        id: Date.now().toString(),
+        name: text,
+        ids: isSetEditId.trim(),
+      });
+      console.log('Document updated successfully!');
+      setInputText('');
+     
+      Setedit(true)
+      getUser()
+    
+    } catch (error) {
+      console.error('Error updating document: ', error);
+    }
+  };
   // const userDocument = await firestore().collection('Users').doc('GMhE4rb5SulfOweVIdyh');
   const addMessage = () => {
     if (inputText.trim()) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      // setMessages(prevMessages => [
+      // setMessages(prevMessages =>    [
       //   {id: Date.now().toString(), text: inputText.trim()},
       //   ...prevMessages,
       // ]);
+      // setMessages( tempData.push({id: Date.now().toString(), text: inputText.trim(),ids:Date.now().toString()}));
 
       firestore()
         .collection('Users')
@@ -94,28 +122,49 @@ const ChatScreen = () => {
         });
       setInputText('');
       // console.log(messages);
+      getUser();
     }
   };
 
   const renderItem = ({item}) => (
+  //   <Animated.View
+  //   entering={FadeIn.duration(300)} // Animate when the item enters
+  //   exiting={FadeOut.duration(300)} // Animate when the item exits
+  //   style={styles.messageBubble}
+  // >
     <View style={styles.messageBubble}>
       <Text style={styles.messageText}>{item.name}</Text>
       <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-        <Icon
-          source={icons.editIcon}
-          tintColor={'#ffffff'}
-          size={20}
-          style={{marginRight: 10}}
-        />
+        <TouchableOpacity
+          style={{}}
+          onPress={() => {
+            console.log("edits");
+            setInputText(item.name);
+            setEidtId(item.ids)
+            Setedit(false)
+           
+         
+          }}>
+          <Icon
+            source={icons.editIcon}
+            tintColor={'#ffffff'}
+            size={20}
+            style={{marginRight: 10}}
+          />
+        </TouchableOpacity>
+   
         <TouchableOpacity
           style={{}}
           onPress={() => {
             deleteMessage(item.ids);
+            setModalVisible(true);
           }}>
           <Icon source={icons.deleteIcon} tintColor={'#ffffff'} size={20} />
         </TouchableOpacity>
       </View>
-    </View>
+     </View> 
+
+    
   );
 
   return (
@@ -134,9 +183,24 @@ const ChatScreen = () => {
           onChangeText={setInputText}
           placeholder="Type a message"
         />
-        <TouchableOpacity style={styles.sendButton} onPress={addMessage}>
+        <TouchableOpacity style={styles.sendButton} onPress={()=>{isedit ? addMessage()
+        : editMessage( isSetEditId,inputText.trim());
+        }}>
           <Text style={styles.sendButtonText}>Send</Text>
         </TouchableOpacity>
+        <Modal isVisible={isModalVisible}>
+          <View style={{flex: 1}}>
+            <Text>Delete!</Text>
+
+            <Button
+              title="Hide modal"
+              onPress={() => {
+                setModalVisible(false);
+                getUser();
+              }}
+            />
+          </View>
+        </Modal>
       </View>
     </View>
   );
