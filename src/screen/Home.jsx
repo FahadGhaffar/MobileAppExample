@@ -48,53 +48,6 @@ Colors.loadColors({
 //     body: {fontSize: 18, fontWeight: '400'}
 //   });
 
-// const renderItem = ({ item }) => {
-//     return (
-//         <TouchableOpacity
-//             style={{
-//                 padding: SIZES.padding,
-//                 paddingBottom: SIZES.padding * 2,
-//                 backgroundColor: (selectedCategory?.id == item.id) ? COLORS.primary : COLORS.white,
-//                 borderRadius: SIZES.radius,
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 marginRight: SIZES.padding,
-//                 ...styles.shadow
-//             }}
-//             onPress={() => onSelectCategory(item)}
-//         >
-//             <View
-//                 style={{
-//                     width: 50,
-//                     height: 50,
-//                     borderRadius: 25,
-//                     alignItems: "center",
-//                     justifyContent: "center",
-//                     backgroundColor: (selectedCategory?.id == item.id) ? COLORS.white : COLORS.lightGray
-//                 }}
-//             >
-//                 <Image
-//                     source={item.icon}
-//                     resizeMode="contain"
-//                     style={{
-//                         width: 30,
-//                         height: 30
-//                     }}
-//                 />
-//             </View>
-
-//             <Text
-//                 style={{
-//                     marginTop: SIZES.padding,
-//                     color: (selectedCategory?.id == item.id) ? COLORS.white : COLORS.black,
-//                     ...FONTS.body5
-//                 }}
-//             >
-//                 {item.name}
-//             </Text>
-//         </TouchableOpacity>
-//     )
-// }
 const DATA = [
   {id: 1, title: 'Brake and brake Fluid', images: `${images.brake}`},
   {id: 2, title: 'Batteries', images: `${images.batteries}`},
@@ -297,10 +250,10 @@ const Home = () => {
             height: responsiveHeight(20),
             width: responsiveWidth(95),
             backgroundColor: 'blue',
-        
-            borderWidth: 5, 
-            borderColor: 'white', 
-            borderRadius: 10, 
+
+            borderWidth: 5,
+            borderColor: 'white',
+            borderRadius: 10,
           }}>
           <View
             style={{
@@ -344,21 +297,19 @@ const Home = () => {
               backgroundColor: '#929292',
               zIndex: -1,
               marginLeft: -25,
-              justifyContent:'center',
-              alignContent:'center',
-              flexDirection:'row'
+              justifyContent: 'center',
+              alignContent: 'center',
+              flexDirection: 'row',
             }}>
-              
             <ImageBackground
-              source={images.group} 
+              source={images.group}
               style={{
                 height: responsiveHeight(19),
                 width: responsiveWidth(50),
                 overflow: 'hidden',
-                position: 'absolute', 
+                position: 'absolute',
                 left: 0,
                 top: 0,
-                
               }}
               resizeMode="cover"
             />

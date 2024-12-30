@@ -18,11 +18,15 @@ import {FlashList} from '@shopify/flash-list';
 import {icons} from '../constants';
 const Service = () => {
   let tempData = [
-    {id: 1, title: 'first'},
-    {id:2, title: 'first'},
-    {id: 3, title: 'first'},
-    {id: 4, title: 'first'},
-    {id:5, title: 'first'},
+    {id: 1, title: 'Upgrades & Accessories (1)', iconImage: `${icons.bag}`},
+    {id: 2, title: 'Exterior', iconImage: `${icons.carExterior}`},
+    {id: 3, title: 'Interior', iconImage: `${icons.carInterior}`},
+    {id: 4, title: 'Collision & Glass', iconImage: `${icons.carRepair}`},
+    {id: 5, title: 'Noise & Vibration', iconImage: `${icons.carNoise}`},
+    {id: 6, title: 'Tires & Wheels', iconImage: `${icons.tire}`},
+    {id: 7, title: 'Battery & Charging', iconImage: `${icons.plugin}`},
+    {id: 8, title: 'Software & Autopilot', iconImage: `${icons.tablet}`},
+    {id: 9, title: 'Other', iconImage: `${icons.question}`},
   ];
   const renderItem = ({item}) => {
     return (
@@ -31,23 +35,23 @@ const Service = () => {
           flexDirection: 'row',
           alignItems: 'center',
           backgroundColor: '#161719',
-          paddingHorizontal: 20,
-          paddingVertical: 15,
-       
+          paddingVertical: 12,
           justifyContent: 'space-between',
         }}>
-        <TouchableOpacity
-          onPress={() => console.log('back')}
-          style={styles.backButton}>
-          <Icon source={icons.lessSign} tintColor={'#ffffff'} size={20} />
-        </TouchableOpacity>
-        <Text style={{color: '#ffffff', fontSize: 20, fontWeight: 'bold'}}>
-          {item.title}
-        </Text>
+        <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={() => console.log('back')}
+            style={styles.backButton}>
+            <Icon source={item.iconImage} tintColor={'#ffffff'} size={20} />
+          </TouchableOpacity>
+          <Text style={{color: '#ffffff', fontSize: 20, fontWeight: 'bold'}}>
+            {item.title}
+          </Text>
+        </View>
         <TouchableOpacity
           onPress={() => console.log('cross')}
           style={styles.backButton}>
-          <Icon source={icons.vectorArrow} tintColor={'#ffffff'} size={20} />
+          <Icon source={icons.greaterThan} tintColor={'#ffffff'} size={8} />
         </TouchableOpacity>
       </View>
     );
@@ -58,10 +62,16 @@ const Service = () => {
         style={{
           backgroundColor: '#161719',
           flex: 1,
-          paddingTop: 50,
+          paddingTop: 25,
           paddingHorizontal: 20,
         }}>
-        <Text style={{color: '#ffffff', fontSize: 20, fontWeight: 600}}>
+        <Text
+          style={{
+            color: '#ffffff',
+            fontSize: 22,
+            fontWeight: 600,
+            paddingBottom: 10,
+          }}>
           Support Topics
         </Text>
 
@@ -94,8 +104,8 @@ const Service = () => {
 };
 
 const styles = StyleSheet.create({
-//   backButton: {
-//     marginRight: 10,
-//   },
+  //   backButton: {
+  //     marginRight: 10,
+  //   },
 });
 export default Service;
