@@ -30,30 +30,32 @@ const Service = () => {
   ];
   const renderItem = ({item}) => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: '#161719',
-          paddingVertical: 12,
-          justifyContent: 'space-between',
-        }}>
-        <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
+      <TouchableOpacity onPress={() => {}} activeOpacity={0.7}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#161719',
+            paddingVertical: 12,
+            justifyContent: 'space-between',
+          }}>
+          <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
+            <TouchableOpacity
+              onPress={() => console.log('back')}
+              style={styles.backButton}>
+              <Icon source={item.iconImage} tintColor={'#ffffff'} size={20} />
+            </TouchableOpacity>
+            <Text style={{color: '#ffffff', fontSize: 20, fontWeight: 'bold'}}>
+              {item.title}
+            </Text>
+          </View>
           <TouchableOpacity
-            onPress={() => console.log('back')}
+            onPress={() => console.log('cross')}
             style={styles.backButton}>
-            <Icon source={item.iconImage} tintColor={'#ffffff'} size={20} />
+            <Icon source={icons.greaterThan} tintColor={'#ffffff'} size={8} />
           </TouchableOpacity>
-          <Text style={{color: '#ffffff', fontSize: 20, fontWeight: 'bold'}}>
-            {item.title}
-          </Text>
         </View>
-        <TouchableOpacity
-          onPress={() => console.log('cross')}
-          style={styles.backButton}>
-          <Icon source={icons.greaterThan} tintColor={'#ffffff'} size={8} />
-        </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     );
   };
   return (
@@ -86,10 +88,10 @@ const Service = () => {
       <View
         style={{
           width: responsiveWidth(100),
-          height: 150,
+          height: 120,
           borderTopColor: '#1E1E20',
           backgroundColor: '#161719',
-          borderTopWidth: 2,
+          // borderTopWidth: 2,
         }}
         center>
         <Button
@@ -97,6 +99,7 @@ const Service = () => {
           backgroundColor={'#2D2D2D'}
           color={'#ffffff'}
           borderRadius={10}
+          style={{width: responsiveWidth(85), height: responsiveHeight(8)}}
         />
       </View>
     </View>
