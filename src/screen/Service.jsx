@@ -137,7 +137,7 @@ const Service = () => {
           height: 120,
           borderTopColor: '#1E1E20',
           backgroundColor: '#161719',
-          // borderTopWidth: 2,
+          borderTopWidth: 3,
         }}
         center>
         <Button
