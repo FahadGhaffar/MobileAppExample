@@ -4,6 +4,7 @@ import CustomTabBar from './CustomTabBar'
 import Cart from '../../screen/Cart';
 import Home from '../../screen/Home';
 import Profile from '../../screen/Profile';
+import ChatScreen from '../../screen/ChatScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,8 +27,8 @@ function TabScreen() {
   
             headerShown: false,
           })}
-          name="cart"
-          component={Cart}
+          name="chatScreen"
+          component={ChatScreen}
         />
   
         <Tab.Screen
