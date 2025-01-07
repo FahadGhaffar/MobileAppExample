@@ -9,7 +9,7 @@ const Profile = () => {
    
     <Button label={'Redex'} size={Button.sizes.large} backgroundColor={"red"} onPress={()=>{ navigation.navigate('redexAdd')
     }}/>
-    <Button label={'Firebase'} size={Button.sizes.large} backgroundColor={"red"} onPress={()=>{console.log("Firebase");}} />
+    <Button label={'Firebase'} size={Button.sizes.large} backgroundColor={"red"} onPress={()=>{navigation.navigate('login')}} />
     <Button label={'Local'} size={Button.sizes.large} backgroundColor={"red"} onPress={()=>{console.log("Local");}}/>
     
 

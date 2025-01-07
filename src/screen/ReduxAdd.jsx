@@ -134,7 +134,15 @@ const ReduxAdd = () => {
   //   style={styles.messageBubble}
   // >
     <View style={styles.messageBubble}>
+      <View style={{flexDirection:'row', }}>
+      <Icon
+            source={icons.editIcon}
+            tintColor={'#ffffff'}
+            size={20}
+            style={{marginRight: 10}}
+          />
       <Text style={styles.messageText}>{item.name}</Text>
+      </View>
       <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
         <TouchableOpacity
           style={{}}
