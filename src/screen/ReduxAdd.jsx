@@ -39,6 +39,9 @@ const ReduxAdd = () => {
   const [inputText, setInputText] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
  
+  let ReduxExampleData = [];
+
+
   useEffect(() => {
     getUser();
   }, []);
@@ -117,12 +120,17 @@ const ReduxAdd = () => {
  
     <View style={styles.messageBubble}>
       <View style={{flexDirection:'row', }}>
+      <TouchableOpacity
+      style={{}}
+      onPress={() => {}}
+      >
       <Icon
             source={icons.editIcon}
             tintColor={'#ffffff'}
             size={20}
             style={{marginRight: 10}}
           />
+          </TouchableOpacity>
       <Text style={styles.messageText}>{item.name}</Text>
       </View>
       <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
