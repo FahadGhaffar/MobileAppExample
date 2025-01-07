@@ -37,7 +37,6 @@ const ReduxAdd = () => {
   const [isedit, Setedit] = useState(true);
   const [isSetEditId, setEidtId] = useState('');
   const [inputText, setInputText] = useState('');
-  const [inputEditText, setEditInputText] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
  
   useEffect(() => {
@@ -46,26 +45,15 @@ const ReduxAdd = () => {
   const getUser = async () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
-    // const userDocument = await firestore()
-    //   .collection('Users')
-    //   .doc('GMhE4rb5SulfOweVIdyh')
-    //   .get();
+ 
     const userDocument = await firestore().collection('Users').get();
 
-    // userDocument.forEach(doc => console.log(doc.id, doc.data()));
+    
     userDocument.forEach(doc => {
       doc.data()['ids'] = doc.id;
       tempData.push(doc.data());
     });
-    // firestore()
-    //   .collection('Users')
-    //   .add({
-    //     id: '1234',
-    //     name: inputText,
-    //   })
-    //   .then(() => {
-    //     console.log('user added');
-    //   });
+    
     console.log(tempData);
 
     setMessages(tempData);
@@ -102,15 +90,11 @@ const ReduxAdd = () => {
       console.error('Error updating document: ', error);
     }
   };
-  // const userDocument = await firestore().collection('Users').doc('GMhE4rb5SulfOweVIdyh');
+
   const addMessage = () => {
     if (inputText.trim()) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      // setMessages(prevMessages =>    [
-      //   {id: Date.now().toString(), text: inputText.trim()},
-      //   ...prevMessages,
-      // ]);
-      // setMessages( tempData.push({id: Date.now().toString(), text: inputText.trim(),ids:Date.now().toString()}));
+     
 
       firestore()
         .collection('Users')
@@ -127,12 +111,10 @@ const ReduxAdd = () => {
     }
   };
 
+
+
   const renderItem = ({item}) => (
-  //   <Animated.View
-  //   entering={FadeIn.duration(300)} // Animate when the item enters
-  //   exiting={FadeOut.duration(300)} // Animate when the item exits
-  //   style={styles.messageBubble}
-  // >
+ 
     <View style={styles.messageBubble}>
       <View style={{flexDirection:'row', }}>
       <Icon
@@ -227,7 +209,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 8,
     width: responsiveWidth(95),
-    // alignSelf: 'flex-start',
+   
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
