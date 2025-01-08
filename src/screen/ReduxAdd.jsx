@@ -32,6 +32,8 @@ if (
 
 const ReduxAdd = () => {
   let tempData = [];
+
+
   const [messages, setMessages] = useState([]);
   const [isedit, Setedit] = useState(true);
   const [isSetEditId, setEidtId] = useState('');
@@ -108,10 +110,17 @@ const ReduxAdd = () => {
     }
   };
 
+  const addFavoriteList = item =>{
+    console.log(item);
+    
+  }
+
   const renderItem = ({item}) => (
     <View style={styles.messageBubble}>
       <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity style={{}} onPress={() => {}}>
+        <TouchableOpacity style={{}} onPress={() => {
+          addFavoriteList(item)
+        }}>
           <Icon
             source={icons.editIcon}
             tintColor={'#ffffff'}
