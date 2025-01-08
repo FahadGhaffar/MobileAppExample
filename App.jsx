@@ -37,8 +37,8 @@ import {
 } from 'react-native-ui-lib';
 
 import SlackNavigation from './src/component/navigation/SlackNavigation.jsx';
-
-
+import { Provider } from 'react-redux'
+import myStore from './src/redux/myStore.js';
 import {NavigationContainer} from '@react-navigation/native';
 
 
@@ -57,10 +57,13 @@ Colors.loadColors({
 
 function App() {
   return (
+    <Provider store={myStore}>
     <NavigationContainer>
 
       <SlackNavigation/>
     </NavigationContainer>
+
+    </Provider>
   );
 }
 
