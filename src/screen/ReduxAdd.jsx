@@ -1,4 +1,3 @@
-
 import React, {useState, useEffect} from 'react';
 import {
   View,
@@ -12,7 +11,7 @@ import {
   Button,
 } from 'react-native';
 import {Icon, Assets} from 'react-native-ui-lib';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import {
   responsiveHeight,
   responsiveWidth,
@@ -38,111 +37,98 @@ const ReduxAdd = () => {
   const [isSetEditId, setEidtId] = useState('');
   const [inputText, setInputText] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
- 
-  let ReduxExampleData = [];
 
+  let ReduxExampleData = [
+    {id: 1, name: 'Abc', ids: 122354},
+    {id: 2, name: 'Abcd', ids: 12354},
+    {id: 3, name: 'zyx', ids: 123545},
+    {id: 4, name: 'xyz', ids: 565656},
+  ];
 
   useEffect(() => {
     getUser();
   }, []);
   const getUser = async () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setMessages(ReduxExampleData);
+    // const userDocument = await firestore().collection('Users').get();
 
- 
-    const userDocument = await firestore().collection('Users').get();
+    // userDocument.forEach(doc => {
+    //   doc.data()['ids'] = doc.id;
+    //   tempData.push(doc.data());
+    // });
 
-    
-    userDocument.forEach(doc => {
-      doc.data()['ids'] = doc.id;
-      tempData.push(doc.data());
-    });
-    
-    console.log(tempData);
+    // console.log(tempData);
 
-    setMessages(tempData);
+    // setMessages(tempData);
   };
 
   const deleteMessage = id => {
-    firestore()
-      .collection('Users')
-      .doc(id)
-      .delete()
-      .then(() => {
-        console.log('Doc deleted');
-      })
-      .catch(error => {
-        console.error('Error removing document: ', error);
-      });
+    // firestore()
+    //   .collection('Users')
+    //   .doc(id)
+    //   .delete()
+    //   .then(() => {
+    //     console.log('Doc deleted');
+    //   })
+    //   .catch(error => {
+    //     console.error('Error removing document: ', error);
+    //   });
   };
 
   const editMessage = async (docId, text) => {
-    try {
-      
-      await firestore().collection('Users').doc(docId).update({
-        id: Date.now().toString(),
-        name: text,
-        ids: isSetEditId.trim(),
-      });
-      console.log('Document updated successfully!');
-      setInputText('');
-     
-      Setedit(true)
-      getUser()
-    
-    } catch (error) {
-      console.error('Error updating document: ', error);
-    }
+    // try {
+    //   await firestore().collection('Users').doc(docId).update({
+    //     id: Date.now().toString(),
+    //     name: text,
+    //     ids: isSetEditId.trim(),
+    //   });
+    //   console.log('Document updated successfully!');
+    //   setInputText('');
+    //   Setedit(true)
+    //   getUser()
+    // } catch (error) {
+    //   console.error('Error updating document: ', error);
+    // }
   };
 
   const addMessage = () => {
     if (inputText.trim()) {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-     
-
-      firestore()
-        .collection('Users')
-        .add({
-          id: Date.now().toString(),
-          name: inputText.trim(),
-        })
-        .then(() => {
-          console.log('user added');
-        });
-      setInputText('');
-      // console.log(messages);
-      getUser();
+      // firestore()
+      //   .collection('Users')
+      //   .add({
+      //     id: Date.now().toString(),
+      //     name: inputText.trim(),
+      //   })
+      //   .then(() => {
+      //     console.log('user added');
+      //   });
+      // setInputText('');
+      // // console.log(messages);
+      // getUser();
     }
   };
 
-
-
   const renderItem = ({item}) => (
- 
     <View style={styles.messageBubble}>
-      <View style={{flexDirection:'row', }}>
-      <TouchableOpacity
-      style={{}}
-      onPress={() => {}}
-      >
-      <Icon
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity style={{}} onPress={() => {}}>
+          <Icon
             source={icons.editIcon}
             tintColor={'#ffffff'}
             size={20}
             style={{marginRight: 10}}
           />
-          </TouchableOpacity>
-      <Text style={styles.messageText}>{item.name}</Text>
+        </TouchableOpacity>
+        <Text style={styles.messageText}>{item.name}</Text>
       </View>
       <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
         <TouchableOpacity
           style={{}}
           onPress={() => {
-            console.log("edits");
+            console.log('edits');
             setInputText(item.name);
-            setEidtId(item.ids)
-            Setedit(false)
-           
-         
+            setEidtId(item.ids);
+            Setedit(false);
           }}>
           <Icon
             source={icons.editIcon}
@@ -151,7 +137,7 @@ const ReduxAdd = () => {
             style={{marginRight: 10}}
           />
         </TouchableOpacity>
-   
+
         <TouchableOpacity
           style={{}}
           onPress={() => {
@@ -161,9 +147,7 @@ const ReduxAdd = () => {
           <Icon source={icons.deleteIcon} tintColor={'#ffffff'} size={20} />
         </TouchableOpacity>
       </View>
-     </View> 
-
-    
+    </View>
   );
 
   return (
@@ -182,9 +166,11 @@ const ReduxAdd = () => {
           onChangeText={setInputText}
           placeholder="Type a message"
         />
-        <TouchableOpacity style={styles.sendButton} onPress={()=>{isedit ? addMessage()
-        : editMessage( isSetEditId,inputText.trim());
-        }}>
+        <TouchableOpacity
+          style={styles.sendButton}
+          onPress={() => {
+            isedit ? addMessage() : editMessage(isSetEditId, inputText.trim());
+          }}>
           <Text style={styles.sendButtonText}>Send</Text>
         </TouchableOpacity>
         <Modal isVisible={isModalVisible}>
@@ -217,7 +203,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 8,
     width: responsiveWidth(95),
-   
+
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
