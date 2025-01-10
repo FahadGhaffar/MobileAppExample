@@ -23,7 +23,7 @@ import Modal from 'react-native-modal';
 import {icons, images} from '../constants';
 // Get user document with an ID of ABC
 import { useSelector, useDispatch } from 'react-redux'
-const dispatch = useDispatch()
+// const dispatch = useDispatch()
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental

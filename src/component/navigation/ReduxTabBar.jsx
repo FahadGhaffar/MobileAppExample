@@ -1,8 +1,10 @@
 import {Text} from 'react-native-ui-lib';
 import ReduxAdd from '../../screen/ReduxAdd';
 import ReduxAddFavorite from '../../screen/ReduxAddFavorite';
-
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 function ReduxTabBar() {
+  const Tab = createBottomTabNavigator();
+
   return (
     <Tab.Navigator
       screenOptions={{
