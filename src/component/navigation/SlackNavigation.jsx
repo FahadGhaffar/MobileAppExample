@@ -10,7 +10,8 @@ import Upgrades from '../../screen/Upgrades';
 import Noise from '../../screen/Noise';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Cart from '../../screen/Cart';
-import ReduxAdd from '../../screen/ReduxAdd';
+// import ReduxAdd from '../../screen/ReduxAdd';
+import ReduxTabBar from './ReduxTabBar';
 const Stack = createNativeStackNavigator();
 
 const SlackNavigation = () => {
@@ -104,12 +105,12 @@ const SlackNavigation = () => {
         name="noise"
         component={Noise}
       />
-       <Stack.Screen
+      <Stack.Screen
         options={({route}) => ({
           headerShown: false,
         })}
         name="redexAdd"
-        component={ReduxAdd}
+        component={ReduxTabBar}
       />
     </Stack.Navigator>
   );
