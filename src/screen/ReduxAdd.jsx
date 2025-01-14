@@ -23,6 +23,7 @@ import Modal from 'react-native-modal';
 import {icons, images} from '../constants';
 // Get user document with an ID of ABC
 import { useSelector, useDispatch } from 'react-redux'
+import { addFavoriteList } from '../redux/listSlices';
 // const dispatch = useDispatch()
 if (
   Platform.OS === 'android' &&
@@ -32,9 +33,13 @@ if (
 }
 
 const ReduxAdd = () => {
+
+
   let tempData = [];
-
-
+  const dispatch =useDispatch();
+  const addedItems = useSelector(state => state)
+  console.log("addedItems",addedItems);
+  
   const [messages, setMessages] = useState([]);
   const [isedit, Setedit] = useState(true);
   const [isSetEditId, setEidtId] = useState('');
@@ -52,7 +57,7 @@ const ReduxAdd = () => {
     getUser();
   }, []);
   const getUser = async () => {
-    setMessages(ReduxExampleData);
+    // setMessages(ReduxExampleData);
     // const userDocument = await firestore().collection('Users').get();
 
     // userDocument.forEach(doc => {
@@ -94,33 +99,35 @@ const ReduxAdd = () => {
     // }
   };
 
+
+  const addItemInRedux = (item) =>{
+    dispatch(addFavoriteList(item))
+  }
   const addMessage = () => {
     if (inputText.trim()) {
-      // firestore()
-      //   .collection('Users')
-      //   .add({
-      //     id: Date.now().toString(),
-      //     name: inputText.trim(),
-      //   })
-      //   .then(() => {
-      //     console.log('user added');
-      //   });
-      // setInputText('');
-      // // console.log(messages);
-      // getUser();
+         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+            setMessages(prevMessages =>    [
+              {id: Date.now().toString(), name: inputText.trim(),ids:Date.now().toString()},
+              ...prevMessages,
+            ]);
+
+            setInputText('')
+            // setMessages( tempData.push({id: Date.now().toString(), name: inputText.trim(),ids:Date.now().toString()}));
     }
   };
 
-  const addFavoriteList = item =>{
-    console.log(item);
+  // const addFavoriteList = item =>{
+  //   console.log(item);
     
-  }
+  // }
 
   const renderItem = ({item}) => (
     <View style={styles.messageBubble}>
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity style={{}} onPress={() => {
-          addFavoriteList(item)
+          // addFavoriteList(item)
+          addItemInRedux(item)
+
         }}>
           <Icon
             source={icons.editIcon}

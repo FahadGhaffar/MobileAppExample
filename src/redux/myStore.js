@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import listReuces from './listSlices'
 const myStore  = configureStore({
     reducer:{
-        name:listReuces,
+        favoriteList:listReuces,
     }
 })
 export default myStore
